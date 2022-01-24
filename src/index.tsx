@@ -21,14 +21,14 @@ const main = () => {
       return;
     }
 
-    const text = await logseq.Editor.getEditingBlockContent();
+    const tweet = await logseq.Editor.getEditingBlockContent();
 
     try {
-      await twitterClient.v2.tweet(text);
+      await twitterClient.v2.tweet(tweet);
       logseq.App.showMsg(`
       [:div.p-2 
         [:h1 "logseq-tweet-plugin"]
-        [:h2.text-xl "${text}"]]`);
+        [:h2.text-xl "${tweet}"]]`);
     } catch (e) {
       console.log(e);
       logseq.App.showMsg(`

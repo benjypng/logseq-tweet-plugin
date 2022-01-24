@@ -5,7 +5,7 @@
     "icon": "./icon.svg"
   },
   "name": "logseq-tweet-plugin",
-  "version": "1.0",
+  "version": "0.1alpha",
   "description": "",
   "main": "dist/index.html",
   "targets": {

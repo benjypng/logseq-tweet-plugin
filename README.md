@@ -1,3 +1,7 @@
+# Installation
+
+After installing, set the following in your plugin settings, save and restart Logseq.
+
 ```json
 {
   "appKey": "API Key",
