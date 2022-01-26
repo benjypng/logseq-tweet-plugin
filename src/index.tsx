@@ -68,9 +68,10 @@ const main = () => {
       includeChildren: true,
     });
     const tweetsArr = buttonBlock.children;
+
     logseq.provideModel({
       async tweet() {
-        await handleTweets(twitterClient, tweetsArr);
+        await handleTweets(twitterClient, tweetsArr, uuid);
       },
     });
 

@@ -1,4 +1,8 @@
-export const handleTweets = async (twitterClient: any, tweetsArr: any[]) => {
+export const handleTweets = async (
+  twitterClient: any,
+  tweetsArr: any[],
+  uuid: string
+) => {
   if (tweetsArr.length === 0 || tweetsArr[0]['content'] === '') {
     logseq.App.showMsg(
       'Please include your tweets in child blocks below the button!'
@@ -19,12 +23,14 @@ export const handleTweets = async (twitterClient: any, tweetsArr: any[]) => {
       }
 
       console.log(`Tweeting ${tweet}`);
-      await twitterClient.v2.tweet(tweet);
+      // await twitterClient.v2.tweet(tweet);
 
       logseq.App.showMsg(`
                       [:div.p-2
                         [:h1 "logseq-tweet-plugin"]
                         [:h2.text-xl "${tweet}"]]`);
+
+      await logseq.Editor.updateBlock(uuid, `#tweeted on ${new Date()}`);
     } catch (e) {
       console.log(e);
       logseq.App.showMsg(`

@@ -46,7 +46,8 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 3. Create a project.
 
 4. Go to your app settings and ensure that your user authentication settings are set to OAuth 1.0a. It should reflect as below after you're done:
-   ![](/screenshots/user-auth-settings.png)
+
+![](/screenshots/user-auth-settings2.png)
 
 5. Go to your keys and tokens page using the tab below:
    ![](/screenshots/keys-tokens-tab.png)
