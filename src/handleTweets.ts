@@ -40,7 +40,7 @@ export const handleTweets = async (
         `#tweeted on ${getDateForPage(
           new Date(),
           logseq.settings.preferredDateFormat
-        )}`
+        )} at ${new Date().toTimeString().substring(0, 5)}`
       );
     } catch (e) {
       console.log(e);
