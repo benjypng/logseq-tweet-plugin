@@ -19,7 +19,7 @@ export const handleTweets = async (twitterClient: any, tweetsArr: any[]) => {
       }
 
       console.log(`Tweeting ${tweet}`);
-      //   await twitterClient.v2.tweet(tweet);
+      await twitterClient.v2.tweet(tweet);
 
       logseq.App.showMsg(`
                       [:div.p-2
@@ -61,7 +61,7 @@ export const handleTweets = async (twitterClient: any, tweetsArr: any[]) => {
             [:h2.text-xl "Tweet thread sent!"]]`);
 
       console.log(tweetThread);
-      //   await twitterClient.v2.tweetThread(tweetThread);
+      await twitterClient.v2.tweetThread(tweetThread);
     } catch (e) {
       console.log(e);
       logseq.App.showMsg(`
