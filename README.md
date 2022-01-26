@@ -50,7 +50,8 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 ![](/screenshots/user-auth-settings2.png)
 
 5. Go to your keys and tokens page using the tab below:
-   ![](/screenshots/keys-tokens-tab.png)
+
+![](/screenshots/keys-tokens-tab.png)
 
 6. On this page, generate your:
 
