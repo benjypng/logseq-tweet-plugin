@@ -66,3 +66,7 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 
 - All blank blocks in a Tweet thread will be ignored when sending the tweet (see demo above). There will be a popup indicating so, but the tweet will still get sent.
 - Will be looking to add abiility to schedule tweets and upload images when I have the time (I hope).
+
+# Credits
+
+- [Twitter API v2](https://github.com/plhery/node-twitter-api-v2)

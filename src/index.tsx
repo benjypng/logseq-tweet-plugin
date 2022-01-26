@@ -11,6 +11,13 @@ const uniqueIdentifier = () =>
 const main = () => {
   console.log('logseq-tweet-plugin loaded');
 
+  window.setTimeout(async () => {
+    const userConfigs = await logseq.App.getUserConfigs();
+    const preferredDateFormat: string = userConfigs.preferredDateFormat;
+    logseq.updateSettings({ preferredDateFormat: preferredDateFormat });
+    console.log(`Settings updated to ${preferredDateFormat}`);
+  }, 3000);
+
   const { appKey, appSecret, accessToken, accessSecret } = logseq.settings;
 
   const twitterClient = new TwitterApi({
@@ -21,15 +28,9 @@ const main = () => {
   });
 
   logseq.Editor.registerSlashCommand('tweet', async () => {
-    const currBlock = await logseq.Editor.getCurrentBlock();
     await logseq.Editor.insertAtEditingCursor(
       `{{renderer :tweet_${uniqueIdentifier()}}}`
     );
-    await logseq.Editor.insertBlock(currBlock.uuid, '', {
-      before: false,
-      sibling: false,
-    });
-    await logseq.Editor.restoreEditingCursor();
   });
 
   logseq.provideStyle(`

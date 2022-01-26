@@ -1,3 +1,5 @@
+import { getDateForPage } from './dateUtils';
+
 export const handleTweets = async (
   twitterClient: any,
   tweetsArr: any[],
@@ -22,21 +24,33 @@ export const handleTweets = async (
         tweet = tweet.replace('#twitter', '');
       }
 
-      console.log(`Tweeting ${tweet}`);
-      // await twitterClient.v2.tweet(tweet);
+      const { data: createdTweet } = await twitterClient.v2.tweet(tweet);
+      console.log('Tweet', createdTweet.id, ':', createdTweet.text);
 
-      logseq.App.showMsg(`
-                      [:div.p-2
-                        [:h1 "logseq-tweet-plugin"]
-                        [:h2.text-xl "${tweet}"]]`);
+      logseq.App.showMsg(
+        `
+      [:div.p-2
+        [:h1 "logseq-tweet-plugin"]
+        [:h2.text-xl "${tweet}"]]`,
+        'success'
+      );
 
-      await logseq.Editor.updateBlock(uuid, `#tweeted on ${new Date()}`);
+      await logseq.Editor.updateBlock(
+        uuid,
+        `#tweeted on ${getDateForPage(
+          new Date(),
+          logseq.settings.preferredDateFormat
+        )}`
+      );
     } catch (e) {
       console.log(e);
-      logseq.App.showMsg(`
+      logseq.App.showMsg(
+        `
                       [:div.p-2
                         [:h1 "logseq-tweet-plugin"]
-                        [:h2.text-xl "Error! Please check console logs and inform the developer."]]`);
+                        [:h2.text-xl "Error! Please check console logs and inform the developer."]]`,
+        'error'
+      );
       return;
     }
   } else if (tweetsArr.length > 1) {
@@ -61,19 +75,35 @@ export const handleTweets = async (
         }
       }
 
-      logseq.App.showMsg(`
-          [:div.p-2
-            [:h1 "logseq-tweet-plugin"]
-            [:h2.text-xl "Tweet thread sent!"]]`);
+      const { data: createdTweet } = await twitterClient.v2.tweetThread(
+        tweetThread
+      );
+      console.log('Tweet', createdTweet.id, ':', createdTweet.text);
 
-      console.log(tweetThread);
-      await twitterClient.v2.tweetThread(tweetThread);
+      logseq.App.showMsg(
+        `
+      [:div.p-2
+        [:h1 "logseq-tweet-plugin"]
+        [:h2.text-xl "${tweetThread.join(' ')}"]]`,
+        'success'
+      );
+
+      await logseq.Editor.updateBlock(
+        uuid,
+        `#tweeted on ${getDateForPage(
+          new Date(),
+          logseq.settings.preferredDateFormat
+        )}`
+      );
     } catch (e) {
       console.log(e);
-      logseq.App.showMsg(`
+      logseq.App.showMsg(
+        `
                       [:div.p-2
                         [:h1 "logseq-tweet-plugin"]
-                        [:h2.text-xl "Error! Please check console logs and inform the developer."]]`);
+                        [:h2.text-xl "Error! Please check console logs and inform the developer."]]`,
+        'error'
+      );
       return;
     }
   }
