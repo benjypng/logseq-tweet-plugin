@@ -65,7 +65,8 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 # Important Notes
 
 - All blank blocks in a Tweet thread will be ignored when sending the tweet (see demo above). There will be a popup indicating so, but the tweet will still get sent.
-- Will be looking to add abiility to schedule tweets and upload images when I have the time (I hope).
+- Will be looking to add abiility to schedule tweets when I have the time (I hope).
+- Uploading videos and images are however not possible afaik as the plugin sandbox does not allow retrieval of assets saved into Logseq as an "attachment". However, will look into supporting including linked videos and images through URLs to them.
 
 # Credits
 
