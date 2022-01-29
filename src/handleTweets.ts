@@ -75,10 +75,8 @@ export const handleTweets = async (
         }
       }
 
-      const { data: createdTweet } = await twitterClient.v2.tweetThread(
-        tweetThread
-      );
-      console.log(createdTweet);
+      const data = await twitterClient.v2.tweetThread(tweetThread);
+      console.log(data);
 
       logseq.App.showMsg(
         `
