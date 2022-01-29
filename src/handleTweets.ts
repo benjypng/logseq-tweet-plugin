@@ -12,9 +12,9 @@ export const handleTweets = async (
   } else if (tweetsArr.length === 1) {
     // Single tweet
     let tweet: string = tweetsArr[0]['content'];
-    if (tweet.length > 160) {
+    if (tweet.length > 280) {
       logseq.App.showMsg(
-        'Please ensure that your tweet is less than 160 characters'
+        'Please ensure that your tweet is less than 280 characters'
       );
       return;
     }
@@ -59,9 +59,9 @@ export const handleTweets = async (
       let tweetThread = [];
 
       for (let i of tweetsArr) {
-        if (i['content'].length > 160) {
+        if (i['content'].length > 280) {
           logseq.App.showMsg(
-            'Please ensure that each tweet is less than 160 characters'
+            'Please ensure that each tweet is less than 280 characters'
           );
           return;
         } else if (i['content'].length === 0) {

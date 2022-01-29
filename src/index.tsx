@@ -60,7 +60,7 @@ const main = () => {
     // Handle no of characters
     const blockContent = await logseq.Editor.getEditingBlockContent();
     const noOfChars =
-      blockContent.length > 160
+      blockContent.length > 280
         ? `<span style="color:red;">${blockContent.length}`
         : blockContent.length;
 
@@ -91,7 +91,7 @@ const main = () => {
       key: `${tweetId}`,
       slot,
       reset: true,
-      template: `<button class="tweet-btn" data-slot-id="${slot}" data-tweet-id="${tweetId}" data-on-click="tweet"><i class="ti ti-brand-twitter"></i>: ${noOfChars}/160</button>`,
+      template: `<button class="tweet-btn" data-slot-id="${slot}" data-tweet-id="${tweetId}" data-on-click="tweet"><i class="ti ti-brand-twitter"></i>: ${noOfChars}/280</button>`,
     });
   });
 };
