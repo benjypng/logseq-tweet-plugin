@@ -72,7 +72,17 @@ const main = () => {
 
     logseq.provideModel({
       async tweet() {
-        await handleTweets(twitterClient, tweetsArr, uuid);
+        const { appKey, appSecret, accessSecret, accessToken } =
+          logseq.settings;
+
+        if (!appKey || !appSecret || !accessSecret || !accessToken) {
+          logseq.App.showMsg(
+            'Please review your Logseq settings to ensure that your keys, tokens and secrets are set up correctly.'
+          );
+          return;
+        } else {
+          await handleTweets(twitterClient, tweetsArr, uuid);
+        }
       },
     });
 
