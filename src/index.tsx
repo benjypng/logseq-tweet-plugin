@@ -63,10 +63,6 @@ const main = () => {
         background-color: rgb(29,155,240);
         color: white;
     }
-
-    .noOfChars {
-
-    }
   `);
 
   logseq.App.onMacroRendererSlotted(async ({ slot, payload }) => {
