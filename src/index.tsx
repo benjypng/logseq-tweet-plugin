@@ -2,6 +2,13 @@ import '@logseq/libs';
 import TwitterApi from 'twitter-api-v2';
 import { handleTweets } from './handleTweets';
 
+type TweetInThread = {
+  author_id: string;
+  in_reply_to_user_id: string;
+  id: string;
+  text: string;
+};
+
 // Generate unique identifier
 const uniqueIdentifier = () =>
   Math.random()
@@ -31,6 +38,20 @@ const main = () => {
     await logseq.Editor.insertAtEditingCursor(
       `{{renderer :tweet_${uniqueIdentifier()}}}`
     );
+  });
+
+  logseq.Editor.registerSlashCommand('thread', async () => {
+    const response = await twitterClient.v2.get('tweets/search/recent', {
+      query: 'conversation_id:1487501059270533124',
+      max_results: 100,
+      expansions: ['in_reply_to_user_id', 'author_id'],
+    });
+
+    const thread = response.data.filter((i: TweetInThread) => {
+      if (i.in_reply_to_user_id === i.author_id) return i;
+    });
+
+    console.log(thread.reverse());
   });
 
   logseq.provideStyle(`
