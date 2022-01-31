@@ -47,6 +47,9 @@ const EmbedTweetOrThread = (props: any) => {
           }
         );
 
+        if (threadResponse.meta.result_count === 0)
+          logseq.App.showMsg('This is a tweet, not a thread');
+
         console.log(threadResponse.data.reverse());
 
         logseq.hideMainUI();
