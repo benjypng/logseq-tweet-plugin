@@ -1,10 +1,9 @@
+import { BlockEntity, IBatchBlock } from '@logseq/libs/dist/LSPlugin.user';
+import { getDateForPage } from 'logseq-dateutils';
 import React, { useState } from 'react';
 import './App.css';
 
-type TweetInThread = {
-  author_id: string;
-  in_reply_to_user_id: string;
-  id: string;
+type Tweet = {
   text: string;
 };
 
@@ -29,11 +28,14 @@ const EmbedTweetOrThread = (props: any) => {
       } else {
         const tweetResponse = await twitterClient.v2.get(
           `tweets/${urlVal.substring(urlVal.indexOf('/status/') + 8)}`,
-          { expansions: ['author_id'], 'user.fields': 'name' }
+          {
+            expansions: 'author_id,attachments.media_keys',
+            'media.fields': 'preview_image_url',
+            'tweet.fields': 'created_at,attachments',
+          }
         );
 
-        console.log(tweetResponse.data);
-        console.log(tweetResponse.includes);
+        console.info(tweetResponse);
 
         const threadResponse = await twitterClient.v2.get(
           'tweets/search/recent',
@@ -47,10 +49,43 @@ const EmbedTweetOrThread = (props: any) => {
           }
         );
 
-        if (threadResponse.meta.result_count === 0)
-          logseq.App.showMsg('This is a tweet, not a thread');
+        // Insert tweet block
+        await logseq.Editor.insertAtEditingCursor(`author:: [${
+          tweetResponse.includes.users[0].name
+        }](https://twitter.com/${tweetResponse.includes.users[0].username})
+date:: ${getDateForPage(
+          new Date(tweetResponse.data.created_at),
+          logseq.settings.preferredDateFormat
+        )}
+> ${tweetResponse.data.text}`);
 
-        console.log(threadResponse.data.reverse());
+        const currBlock: BlockEntity = await logseq.Editor.getCurrentBlock();
+
+        if (threadResponse.meta.result_count === 0) {
+          const blockAfter: BlockEntity = await logseq.Editor.insertBlock(
+            currBlock.uuid,
+            '',
+            {
+              before: false,
+              sibling: true,
+            }
+          );
+
+          window.setTimeout(async () => {
+            await logseq.Editor.editBlock(blockAfter.uuid);
+          }, 600);
+        } else {
+          const threadBlock: IBatchBlock = threadResponse.data
+            .reverse()
+            .map((i: Tweet) => ({
+              content: i.text,
+            }));
+
+          await logseq.Editor.insertBatchBlock(currBlock.uuid, threadBlock, {
+            before: false,
+            sibling: false,
+          });
+        }
 
         logseq.hideMainUI();
         setUrlVal('');
@@ -60,7 +95,7 @@ const EmbedTweetOrThread = (props: any) => {
 
   return (
     <div className="flex justify-center border border-black" tabIndex={-1}>
-      <div className=" absolute top-10 bg-white rounded-lg p-3 w-1/3 border">
+      <div className="absolute top-10 bg-white rounded-lg p-3 w-2/3 border">
         <input
           className="url-field appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
           type="text"

@@ -1,4 +1,4 @@
-import { getDateForPage } from './dateUtils';
+import { getDateForPage } from 'logseq-dateutils';
 
 export const handleTweets = async (
   twitterClient: any,

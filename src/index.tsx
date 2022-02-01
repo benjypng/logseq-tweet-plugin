@@ -53,7 +53,7 @@ const main = () => {
   // Handle embed tweet thread
   handleClosePopup();
 
-  logseq.Editor.registerSlashCommand('embed tweet/thread', async () => {
+  logseq.Editor.registerSlashCommand('Embed tweet/thread', async () => {
     ReactDOM.render(
       <React.StrictMode>
         <EmbedTweetOrThread twitterClient={twitterClient} />
