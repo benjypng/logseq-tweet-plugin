@@ -14,6 +14,8 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 
 # Usage
 
+## Tweeting single tweets and tweet threads
+
 1. Install the plugin as above.
 
 2. Navigate to the plugin settings.
@@ -36,6 +38,10 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 6. If you only have 1 block, you will be sending just 1 tweet.
 
 7. If you have multiple blocks, you will be sending a tweet thread.
+
+## Deleting tweets & tweet threads
+
+Once you have tweeted, the tweet button would disappear and be replaced by the date/time stamp of the tweet/thread, and a link to the tweet (or first tweet of the thread). To delete this tweet/thread, right click on the block and select `Delete Tweet`.
 
 # How to get your Twitter keys, secrets and tokens
 

@@ -5,6 +5,8 @@ export const handleTweets = async (
   tweetsArr: any[],
   uuid: string
 ) => {
+  const meUser = await twitterClient.v2.me();
+
   if (tweetsArr.length === 0 || tweetsArr[0]['content'] === '') {
     logseq.App.showMsg(
       'Please include your tweets in child blocks below the button!'
@@ -40,7 +42,12 @@ export const handleTweets = async (
         `#tweeted on ${getDateForPage(
           new Date(),
           logseq.settings.preferredDateFormat
-        )} at ${new Date().toTimeString().substring(0, 5)}`
+        )} at ${new Date().toTimeString().substring(0, 5)}
+link:: [https://www.twitter.com/${meUser.data.username}/status/${
+          createdTweet.id
+        }](https://www.twitter.com/${meUser.data.username}/status/${
+          createdTweet.id
+        })`
       );
     } catch (e) {
       console.log(e);
@@ -75,8 +82,13 @@ export const handleTweets = async (
         }
       }
 
-      const data = await twitterClient.v2.tweetThread(tweetThread);
-      console.log(data);
+      const createdThread = await twitterClient.v2.tweetThread(tweetThread);
+      console.log(
+        'Thread',
+        createdThread[0].data.id,
+        ':',
+        createdThread[0].data.text
+      );
 
       logseq.App.showMsg(
         `
@@ -91,7 +103,12 @@ export const handleTweets = async (
         `#tweeted on ${getDateForPage(
           new Date(),
           logseq.settings.preferredDateFormat
-        )}`
+        )} at ${new Date().toTimeString().substring(0, 5)}
+link:: [https://www.twitter.com/${meUser.data.username}/status/${
+          createdThread[0].data.id
+        }](https://www.twitter.com/${meUser.data.username}/status/${
+          createdThread[0].data.id
+        })`
       );
     } catch (e) {
       console.log(e);

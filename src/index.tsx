@@ -5,6 +5,7 @@ import TwitterApi from 'twitter-api-v2';
 import { buttonRenderer } from './buttonRenderer';
 import EmbedTweetOrThread from './EmbedTweet';
 import { handleClosePopup } from './handleClosePopup';
+import { handleDeleteTweet } from './handleDeleteTweet';
 
 // Generate unique identifier
 const uniqueIdentifier = () =>
@@ -33,11 +34,12 @@ const main = () => {
   });
 
   // Handle tweeting
-  logseq.Editor.registerSlashCommand('tweet', async () => {
+  logseq.Editor.registerSlashCommand('Tweet', async () => {
     await logseq.Editor.insertAtEditingCursor(
       `{{renderer :tweet_${uniqueIdentifier()}}}`
     );
   });
+
   logseq.provideStyle(`
     .tweet-btn {
         padding: 8px;
@@ -48,6 +50,7 @@ const main = () => {
         color: white;
     }
   `);
+
   buttonRenderer(twitterClient);
 
   // Handle embed tweet thread
@@ -69,6 +72,8 @@ const main = () => {
       }
     });
   });
+
+  handleDeleteTweet(twitterClient);
 };
 
 logseq.ready(main).catch(console.error);
