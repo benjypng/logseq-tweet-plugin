@@ -45,6 +45,16 @@ Once you have tweeted, the tweet button would disappear and be replaced by the d
 
 Note: If you try to delete your tweet immediately after you post it, all the tweets may not get deleted as the Twitter API needs some time to be updated. Do give it a few seconds before initiating the delete.
 
+# Setting custom hashtags for successful tweets
+
+Successful tweets will look something like this: `#tweeted on Feb 22nd, 2022 at 15:34`. You can replace `#tweeted on` with your own custom hashtag by changing the plugin settings.
+
+```
+{
+  "customHashtag": "#tweeted on"
+}
+```
+
 # How to get your Twitter keys, secrets and tokens
 
 1. [Sign up for a developer account](https://developer.twitter.com/en/docs/developer-portal/overview) and log in.

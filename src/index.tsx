@@ -15,6 +15,9 @@ const uniqueIdentifier = () =>
 
 const main = () => {
   console.log('logseq-tweet-plugin loaded');
+  logseq.updateSettings({
+    customHashtag: '#tweeted on',
+  });
 
   // Set preferred date format
   window.setTimeout(async () => {

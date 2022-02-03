@@ -39,7 +39,7 @@ export const handleTweets = async (
 
       await logseq.Editor.updateBlock(
         uuid,
-        `#tweeted on ${getDateForPage(
+        `${logseq.settings.customHashtag} ${getDateForPage(
           new Date(),
           logseq.settings.preferredDateFormat
         )} at ${new Date().toTimeString().substring(0, 5)}
@@ -98,7 +98,7 @@ link:: [https://www.twitter.com/${meUser.data.username}/status/${
 
       await logseq.Editor.updateBlock(
         uuid,
-        `#tweeted on ${getDateForPage(
+        `${logseq.settings.customHashtag} ${getDateForPage(
           new Date(),
           logseq.settings.preferredDateFormat
         )} at ${new Date().toTimeString().substring(0, 5)}
