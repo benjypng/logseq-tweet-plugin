@@ -41,7 +41,9 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 
 ## Deleting tweets & tweet threads
 
-Once you have tweeted, the tweet button would disappear and be replaced by the date/time stamp of the tweet/thread, and a link to the tweet (or first tweet of the thread). To delete this tweet/thread, right click on the block and select `Delete Tweet`.
+Once you have tweeted, the tweet button would disappear and be replaced by the date/time stamp of the tweet/thread, and a link to the tweet (or first tweet of the thread). To delete this tweet/thread, right click on the block and select `Delete tweet/thread`.
+
+Note: If you try to delete your tweet immediately after you post it, all the tweets may not get deleted as the Twitter API needs some time to be updated. Do give it a few seconds before initiating the delete.
 
 # How to get your Twitter keys, secrets and tokens
 

@@ -27,7 +27,7 @@ export const handleTweets = async (
       }
 
       const { data: createdTweet } = await twitterClient.v2.tweet(tweet);
-      console.log('Tweet', createdTweet.id, ':', createdTweet.text);
+      console.log(`SENT! Tweet ID: ${createdTweet.id} - ${createdTweet.text}`);
 
       logseq.App.showMsg(
         `
@@ -83,12 +83,10 @@ link:: [https://www.twitter.com/${meUser.data.username}/status/${
       }
 
       const createdThread = await twitterClient.v2.tweetThread(tweetThread);
-      console.log(
-        'Thread',
-        createdThread[0].data.id,
-        ':',
-        createdThread[0].data.text
-      );
+
+      for (let i of createdThread) {
+        console.log(`SENT! Tweet ID: ${i.data.id} - ${i.data.text}`);
+      }
 
       logseq.App.showMsg(
         `
@@ -113,10 +111,9 @@ link:: [https://www.twitter.com/${meUser.data.username}/status/${
     } catch (e) {
       console.log(e);
       logseq.App.showMsg(
-        `
-                      [:div.p-2
-                        [:h1 "logseq-tweet-plugin"]
-                        [:h2.text-xl "Error! Please check console logs and inform the developer."]]`,
+        `[:div.p-2
+         [:h1 "logseq-tweet-plugin"]
+         [:h2.text-xl "Error! Please check console logs and inform the developer."]]`,
         'error'
       );
       return;
