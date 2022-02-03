@@ -56,15 +56,14 @@ export const handleDeleteTweet = (twitterClient: any) => {
             }
           }
 
-          logseq.Editor.updateBlock(
+          logseq.Editor.upsertBlockProperty(
             e.uuid,
-            `(Deleted on ${getDateForPage(
+            'link',
+            `deleted on ${getDateForPage(
               new Date(),
               logseq.settings.preferredDateFormat
-            )}) ${origBlock.content}`
+            )}`
           );
-
-          logseq.Editor.removeBlockProperty(e.uuid, 'link');
         }
       }, 600);
     }
