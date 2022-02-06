@@ -24,7 +24,7 @@ export const buttonRenderer = (twitterClient: any) => {
     const tweetsArr = buttonBlock.children;
 
     logseq.provideModel({
-      async tweet() {
+      [`tweet-${tweetId}`]: async () => {
         const { appKey, appSecret, accessSecret, accessToken } =
           logseq.settings;
 
@@ -44,7 +44,7 @@ export const buttonRenderer = (twitterClient: any) => {
       key: `${tweetId}`,
       slot,
       reset: true,
-      template: `<button class="tweet-btn" data-slot-id="${slot}" data-tweet-id="${tweetId}" data-on-click="tweet"><i class="ti ti-brand-twitter"></i>: ${noOfChars}/280</button>`,
+      template: `<button class="tweet-btn" data-slot-id="${slot}" data-tweet-id="${tweetId}" data-on-click="tweet-${tweetId}"><i class="ti ti-brand-twitter"></i>: ${noOfChars}/280</button>`,
     });
   });
 };
