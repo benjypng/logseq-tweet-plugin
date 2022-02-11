@@ -1,4 +1,5 @@
 import { handleTweets } from './handleTweets';
+import twitterText from 'twitter-text';
 
 export const buttonRenderer = (twitterClient: any) => {
   logseq.App.onMacroRendererSlotted(async ({ slot, payload }) => {
@@ -12,10 +13,11 @@ export const buttonRenderer = (twitterClient: any) => {
 
     // Handle no of characters
     const blockContent = await logseq.Editor.getEditingBlockContent();
+    const twitterCharacterCount = twitterText.parseTweet(blockContent);
     const noOfChars =
-      blockContent.length > 280
-        ? `<span style="color:red;">${blockContent.length}`
-        : blockContent.length;
+      twitterCharacterCount.weightedLength > 280
+        ? `<span style="color:red;">${twitterCharacterCount.weightedLength}`
+        : twitterCharacterCount.weightedLength;
 
     // Handle tweeting
     const buttonBlock = await logseq.Editor.getBlock(uuid, {
