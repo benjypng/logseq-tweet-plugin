@@ -1,22 +1,25 @@
-import '@logseq/libs';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TwitterApi from 'twitter-api-v2';
-import { buttonRenderer } from './buttonRenderer';
-import EmbedTweetOrThread from './EmbedTweet';
-import { handleClosePopup } from './handleClosePopup';
-import { handleDeleteTweet } from './handleDeleteTweet';
+import "@logseq/libs";
+import React from "react";
+import ReactDOM from "react-dom";
+import TwitterApi from "twitter-api-v2";
+import { buttonRenderer } from "./buttonRenderer";
+import EmbedTweetOrThread from "./EmbedTweet";
+import { handleClosePopup } from "./handleClosePopup";
+import { handleDeleteTweet } from "./handleDeleteTweet";
+import { callSettings } from "./callSettings";
 
-// Generate unique identifier
 const uniqueIdentifier = () =>
   Math.random()
     .toString(36)
-    .replace(/[^a-z]+/g, '');
+    .replace(/[^a-z]+/g, "");
 
 const main = () => {
-  console.log('logseq-tweet-plugin loaded');
+  console.log("logseq-tweet-plugin loaded");
+
+  callSettings();
+
   logseq.updateSettings({
-    customHashtag: '#tweeted on',
+    customHashtag: "#tweeted on",
   });
 
   // Set preferred date format
@@ -37,7 +40,7 @@ const main = () => {
   });
 
   // Handle tweeting
-  logseq.Editor.registerSlashCommand('Tweet', async () => {
+  logseq.Editor.registerSlashCommand("Tweet", async () => {
     await logseq.Editor.insertAtEditingCursor(
       `{{renderer :tweet_${uniqueIdentifier()}}}`
     );
@@ -59,19 +62,19 @@ const main = () => {
   // Handle embed tweet thread
   handleClosePopup();
 
-  logseq.Editor.registerSlashCommand('Embed tweet/thread', async () => {
+  logseq.Editor.registerSlashCommand("Embed tweet/thread", async () => {
     ReactDOM.render(
       <React.StrictMode>
         <EmbedTweetOrThread twitterClient={twitterClient} />
       </React.StrictMode>,
-      document.getElementById('app')
+      document.getElementById("app")
     );
 
     logseq.showMainUI();
 
-    document.addEventListener('keydown', (e: any) => {
+    document.addEventListener("keydown", (e: any) => {
       if (e.keyCode !== 27) {
-        (document.querySelector('.url-field') as HTMLElement).focus();
+        (document.querySelector(".url-field") as HTMLElement).focus();
       }
     });
   });
