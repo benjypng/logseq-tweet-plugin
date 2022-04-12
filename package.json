@@ -12,40 +12,33 @@
     "main": false
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "postcss src/tailwind.css -o src/App.css && parcel build --no-source-maps src/index.html --public-url ./"
+    "build": "postcss src/tailwind.css -o src/App.css && parcel build src/index.html --public-url ./"
   },
   "keywords": [],
   "author": "hkgnp",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.17.2",
     "@logseq/libs": "^0.0.1-alpha.35",
     "autoprefix": "^1.0.1",
-    "chrono-node": "^1.4.8",
-    "core-js": "^3.21.0",
+    "axios": "^0.24.0",
+    "axios-oauth-1.0a": "^0.3.4",
     "logseq-dateutils": "^0.0.20",
     "postcss-cli": "^9.1.0",
     "postcss-import": "^14.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "tailwindcss": "^3.0.15",
-    "twitter-api-v2": "^1.9.1",
     "twitter-text": "^3.1.0"
   },
   "devDependencies": {
+    "@types/node": "^17.0.23",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
-    "assert": "^2.0.0",
-    "browserify-zlib": "^0.2.0",
+    "@types/twitter-text": "^3.1.1",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "events": "^3.3.0",
-    "https-browserify": "^1.0.0",
     "parcel": "^2.2.0",
-    "querystring-es3": "^0.2.1",
-    "stream-browserify": "^3.0.0",
-    "stream-http": "^3.2.0",
-    "url": "^0.11.0"
+    "stream-browserify": "^3.0.0"
   }
 }

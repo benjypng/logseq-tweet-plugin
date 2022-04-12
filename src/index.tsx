@@ -1,52 +1,52 @@
 import "@logseq/libs";
 import React from "react";
 import ReactDOM from "react-dom";
-import TwitterApi from "twitter-api-v2";
 import { buttonRenderer } from "./buttonRenderer";
 import EmbedTweetOrThread from "./EmbedTweet";
 import { handleClosePopup } from "./handleClosePopup";
 import { handleDeleteTweet } from "./handleDeleteTweet";
 import { callSettings } from "./callSettings";
+import axios from "axios";
+import addOAuthInterceptor from "axios-oauth-1.0a";
 
 const uniqueIdentifier = () =>
   Math.random()
     .toString(36)
     .replace(/[^a-z]+/g, "");
 
-const main = () => {
+const main = async () => {
   console.log("logseq-tweet-plugin loaded");
 
   callSettings();
-
-  logseq.updateSettings({
-    customHashtag: "#tweeted on",
-  });
+  handleClosePopup();
 
   // Set preferred date format
   window.setTimeout(async () => {
     const userConfigs = await logseq.App.getUserConfigs();
     const preferredDateFormat: string = userConfigs.preferredDateFormat;
-    logseq.updateSettings({ preferredDateFormat: preferredDateFormat });
+    logseq.updateSettings({
+      preferredDateFormat: preferredDateFormat,
+      customHashtag: "#tweeted on",
+    });
     console.log(`Settings updated to ${preferredDateFormat}`);
   }, 3000);
 
   // Define twitter client
   const { appKey, appSecret, accessToken, accessSecret } = logseq.settings;
-  const twitterClient = new TwitterApi({
-    appKey: appKey,
-    appSecret: appSecret,
-    accessToken: accessToken,
-    accessSecret: accessSecret,
-  });
+  const twitterClient = axios.create();
+  const options = {
+    algorithm: "HMAC-SHA1",
+    key: appKey,
+    secret: appSecret,
+    token: accessToken,
+    tokenSecret: accessSecret,
+  };
+  //@ts-expect-error
+  addOAuthInterceptor(twitterClient, options);
 
   // Handle tweeting
   logseq.Editor.registerSlashCommand("Tweet", async () => {
-    await logseq.Editor.insertAtEditingCursor(
-      `{{renderer :tweet_${uniqueIdentifier()}}}`
-    );
-  });
-
-  logseq.provideStyle(`
+    logseq.provideStyle(`
     .tweet-btn {
         padding: 8px;
         border-radius: 8px;
@@ -56,12 +56,13 @@ const main = () => {
         color: white;
     }
   `);
-
-  buttonRenderer(twitterClient);
+    await logseq.Editor.insertAtEditingCursor(
+      `{{renderer :tweet_${uniqueIdentifier()}}}`
+    );
+    buttonRenderer(twitterClient);
+  });
 
   // Handle embed tweet thread
-  handleClosePopup();
-
   logseq.Editor.registerSlashCommand("Embed tweet/thread", async () => {
     ReactDOM.render(
       <React.StrictMode>
