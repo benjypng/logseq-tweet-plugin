@@ -39,6 +39,8 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 
 7. If you have multiple blocks, you will be sending a tweet thread.
 
+8. When you are done composing your tweet/s, simply hit the big blue tweet button to send off your tweets!
+
 ## Deleting tweets & tweet threads
 
 Once you have tweeted, the tweet button would disappear and be replaced by the date/time stamp of the tweet/thread, and a link to the tweet (or first tweet of the thread). To delete this tweet/thread, right click on the block and select `Delete tweet/thread`.
