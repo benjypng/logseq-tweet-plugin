@@ -12,7 +12,7 @@
     "main": false
   },
   "scripts": {
-    "build": "postcss src/tailwind.css -o src/App.css && parcel build src/index.html --public-url ./"
+    "build": "parcel build src/index.html --no-source-maps --public-url ./"
   },
   "keywords": [],
   "author": "hkgnp",

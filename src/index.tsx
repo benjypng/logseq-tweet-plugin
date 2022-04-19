@@ -41,20 +41,39 @@ const main = async () => {
     token: accessToken,
     tokenSecret: accessSecret,
   };
+
   //@ts-expect-error
   addOAuthInterceptor(twitterClient, options);
 
   // Handle tweeting
   logseq.Editor.registerSlashCommand("Tweet", async () => {
     logseq.provideStyle(`
-    .tweet-btn {
-        padding: 8px;
-        border-radius: 8px;
-        font-size: 110%;
-        border: 1px solid;
-        background-color: rgb(29,155,240);
-        color: white;
-    }
+        .tweet-btn {
+            padding: 8px 8px 14px 8px;
+        	border-radius: 8px;
+        	border: 1px solid;
+        	background-color: rgb(29, 155, 240);
+        }
+        
+        .tweet-btn:hover {
+        	background-color: rgb(9, 90, 144);
+        }
+        
+        .tweet-txt {
+            margin: 0 0 12px 0 !important;
+            padding: 0;
+            font-size: 110%;
+            line-height: 0 !important;
+    	    color: white !important;
+        }
+        
+        .count {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+            line-height: 0 !important;
+            color: white !important;
+        }
   `);
     await logseq.Editor.insertAtEditingCursor(
       `{{renderer :tweet_${uniqueIdentifier()}}}`
