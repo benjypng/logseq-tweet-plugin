@@ -42,7 +42,6 @@ const main = async () => {
     tokenSecret: accessSecret,
   };
 
-  //@ts-expect-error
   addOAuthInterceptor(twitterClient, options);
 
   // Handle tweeting

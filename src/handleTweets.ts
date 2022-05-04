@@ -76,7 +76,9 @@ link:: [https://www.twitter.com/${userName}/status/${
     // Tweet thread
     try {
       let tweetThread = [];
+      let tweetIds: string[] = [];
 
+      // Return object: {"data":{"id":"1521786371467137024","text":"test"}}
       for (let i of tweetsArr) {
         if (i["content"].length > 280) {
           logseq.App.showMsg(
@@ -94,12 +96,38 @@ link:: [https://www.twitter.com/${userName}/status/${
         }
       }
 
-      const createdThread = await twitterClient.v2.tweetThread(tweetThread);
-
-      for (let i of createdThread) {
-        console.log(`SENT! Tweet ID: ${i.data.id} - ${i.data.text}`);
+      for (let i = 0; i < tweetThread.length; i++) {
+        if (i === 0) {
+          const response = await twitterClient({
+            url: "https://api.twitter.com/2/tweets",
+            method: "post",
+            data: {
+              text: tweetThread[i],
+            },
+          });
+          tweetIds.push(response.data.data.id);
+          console.log(
+            `SENT! Tweet ID: ${response.data.data.id} - ${response.data.data.text}`
+          );
+        } else {
+          const response = await twitterClient({
+            url: "https://api.twitter.com/2/tweets",
+            method: "post",
+            data: {
+              text: tweetThread[i],
+              reply: {
+                in_reply_to_tweet_id: tweetIds[i - 1],
+              },
+            },
+          });
+          tweetIds.push(response.data.data.id);
+          console.log(
+            `SENT! Tweet ID: ${response.data.data.id} - ${response.data.data.text}`
+          );
+        }
       }
 
+      console.log(tweetIds);
       logseq.App.showMsg(
         `
       [:div.p-2
@@ -115,9 +143,9 @@ link:: [https://www.twitter.com/${userName}/status/${
           logseq.settings.preferredDateFormat
         )} at ${new Date().toTimeString().substring(0, 5)}
 link:: [https://www.twitter.com/${meUser.data.data.username}/status/${
-          createdThread[0].data.id
+          tweetIds[0]
         }](https://www.twitter.com/${meUser.data.data.username}/status/${
-          createdThread[0].data.id
+          tweetIds[0]
         })`
       );
     } catch (e) {
