@@ -22,26 +22,15 @@ If you can't find the plugin in the marketplace, please [download the latest rel
 
 2. Navigate to the plugin settings.
 
-3. Copy and paste the code below and replace the values with your own (from the developer console). Please refer to the instructions in the next section to find out how to get your keys and secrets.
+3. Key in your API key, API secret, Access token, Access secret, Bearer token. Then close the settings window.
 
-```json
-{
-  "appKey": "API Key",
-  "appSecret": "API Secret",
-  "accessToken": "Access Token",
-  "accessSecret": "Access Token Secret"
-}
-```
+4. Start by typing `/tweet` anywhere. You can then start tweeting in the next block.
 
-4. Restart Logseq.
+5. If you only have 1 block, you will be sending just 1 tweet.
 
-5. Start by typing `/tweet` anywhere. You can then start tweeting in the next block.
+6. If you have multiple blocks, you will be sending a tweet thread.
 
-6. If you only have 1 block, you will be sending just 1 tweet.
-
-7. If you have multiple blocks, you will be sending a tweet thread.
-
-8. When you are done composing your tweet/s, simply hit the big blue tweet button to send off your tweets!
+7. When you are done composing your tweet/s, simply hit the big blue tweet button to send off your tweets!
 
 ## Deleting tweets & tweet threads
 
@@ -96,7 +85,3 @@ Successful tweets will look something like this: `#tweeted on Feb 22nd, 2022 at 
 - All blank blocks in a Tweet thread will be ignored when sending the tweet (see demo above). There will be a popup indicating so, but the tweet will still get sent.
 - Will be looking to add abiility to schedule tweets when I have the time (I hope).
 - Uploading videos and images are however not possible afaik as the plugin sandbox does not allow retrieval of assets saved into Logseq as an "attachment". However, will look into supporting including linked videos and images through URLs to them.
-
-# Credits
-
-- [Twitter API v2](https://github.com/plhery/node-twitter-api-v2)
