@@ -35,7 +35,7 @@ const main = async () => {
   const { appKey, appSecret, accessToken, accessSecret } = logseq.settings;
   const twitterClient = axios.create();
   const options = {
-    algorithm: "HMAC-SHA1",
+    algorithm: "HMAC-SHA1" as "HMAC-SHA1",
     key: appKey,
     secret: appSecret,
     token: accessToken,

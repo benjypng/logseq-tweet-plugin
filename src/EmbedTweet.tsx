@@ -1,7 +1,8 @@
-import { BlockEntity, IBatchBlock } from '@logseq/libs/dist/LSPlugin.user';
-import { getDateForPage } from 'logseq-dateutils';
-import React, { useState } from 'react';
-import './App.css';
+import { BlockEntity, IBatchBlock } from "@logseq/libs/dist/LSPlugin.user";
+import { getDateForPage } from "logseq-dateutils";
+import React, { useState } from "react";
+import "./App.css";
+import axios from "axios";
 
 type Tweet = {
   text: string;
@@ -10,61 +11,61 @@ type Tweet = {
 const EmbedTweetOrThread = (props: any) => {
   const { twitterClient } = props;
 
-  const [urlVal, setUrlVal] = useState('');
+  const [urlVal, setUrlVal] = useState("");
 
   const handleForm = (e: any) => {
     setUrlVal(e.target.value);
   };
 
   const handleSubmit = async (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       if (
-        !urlVal.startsWith('https://www.twitter.com/') &&
-        !urlVal.startsWith('https://twitter.com/') &&
-        !urlVal.startsWith('www.twitter.com/') &&
-        !urlVal.startsWith('twitter.com/')
+        !urlVal.startsWith("https://www.twitter.com/") &&
+        !urlVal.startsWith("https://twitter.com/") &&
+        !urlVal.startsWith("www.twitter.com/") &&
+        !urlVal.startsWith("twitter.com/")
       ) {
-        logseq.App.showMsg('Please double check the URL again!');
+        logseq.App.showMsg("Please double check the URL again!");
       } else {
-        const tweetResponse = await twitterClient.v2.get(
-          `tweets/${urlVal.substring(urlVal.indexOf('/status/') + 8)}`,
-          {
-            expansions: 'author_id,attachments.media_keys',
-            'media.fields': 'preview_image_url',
-            'tweet.fields': 'created_at,attachments',
-          }
-        );
+        const tweetId = urlVal.substring(urlVal.indexOf("/status/") + 8);
+        const tweetResponse = await twitterClient({
+          url: `https://api.twitter.com/2/tweets/${tweetId}`,
+          method: "get",
+          params: {
+            expansions: "author_id,attachments.media_keys,referenced_tweets.id",
+            "media.fields": "preview_image_url",
+            "tweet.fields": "created_at,attachments",
+          },
+        });
 
-        console.info(tweetResponse);
-
-        const threadResponse = await twitterClient.v2.get(
-          'tweets/search/recent',
-          {
-            query: `conversation_id:${urlVal.substring(
-              urlVal.indexOf('/status/') + 8
-            )} from:${tweetResponse.data.author_id} to:${
-              tweetResponse.data.author_id
-            }`,
+        const threadResponse = await axios({
+          url: `https://api.twitter.com/2/tweets/search/recent`,
+          method: "get",
+          headers: {
+            Authorization: `Bearer ${logseq.settings.bearerToken}`,
+          },
+          params: {
+            query: `conversation_id:${tweetId} from:${tweetResponse.data.data.author_id} to:${tweetResponse.data.data.author_id}`,
             max_results: 100,
-          }
-        );
+          },
+        });
 
         // Insert tweet block
         await logseq.Editor.insertAtEditingCursor(`author:: [${
-          tweetResponse.includes.users[0].name
-        }](https://twitter.com/${tweetResponse.includes.users[0].username})
-date:: ${getDateForPage(
-          new Date(tweetResponse.data.created_at),
+          tweetResponse.data.includes.users[0].name
+        }](https://twitter.com/${tweetResponse.data.includes.users[0].username})
+        date:: ${getDateForPage(
+          new Date(tweetResponse.data.data.created_at),
           logseq.settings.preferredDateFormat
         )}
-> ${tweetResponse.data.text}`);
+        > ${tweetResponse.data.data.text}`);
 
         const currBlock: BlockEntity = await logseq.Editor.getCurrentBlock();
 
-        if (threadResponse.meta.result_count === 0) {
+        if (threadResponse.data.meta.result_count === 0) {
           const blockAfter: BlockEntity = await logseq.Editor.insertBlock(
             currBlock.uuid,
-            '',
+            "",
             {
               before: false,
               sibling: true,
@@ -75,7 +76,7 @@ date:: ${getDateForPage(
             await logseq.Editor.editBlock(blockAfter.uuid);
           }, 600);
         } else {
-          const threadBlock: IBatchBlock = threadResponse.data
+          const threadBlock: IBatchBlock = threadResponse.data.data
             .reverse()
             .map((i: Tweet) => ({
               content: i.text,
@@ -88,7 +89,7 @@ date:: ${getDateForPage(
         }
 
         logseq.hideMainUI();
-        setUrlVal('');
+        setUrlVal("");
       }
     }
   };

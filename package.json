@@ -5,7 +5,7 @@
     "icon": "./icon.svg"
   },
   "name": "logseq-tweet-plugin",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "description": "",
   "main": "dist/index.html",
   "targets": {
@@ -20,6 +20,7 @@
   "dependencies": {
     "@logseq/libs": "^0.0.6",
     "axios": "^0.24.0",
+    "axios-jsonp": "^1.0.4",
     "axios-oauth-1.0a": "^0.3.5",
     "logseq-dateutils": "^0.0.21",
     "postcss-cli": "^9.1.0",
