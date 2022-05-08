@@ -1,5 +1,7 @@
 [:gift_heart: Sponsor this project on Github](https://github.com/sponsors/hkgnp) or [:coffee: Get me a coffee](https://www.buymeacoffee.com/hkgnp.dev) if you like this plugin!
 
+> In v2.0.0 onwards, your `Bearer token` is required to embed tweet threads.
+
 # Overview
 
 Easily tweet from within Logseq!
@@ -47,7 +49,13 @@ Once you have tweeted, the tweet button would disappear and be replaced by the d
 
 Note: If you try to delete your tweet immediately after you post it, all the tweets may not get deleted as the Twitter API needs some time to be updated. Do give it a few seconds before initiating the delete.
 
-# Setting custom hashtags for successful tweets
+## Embedding tweet or thread
+
+This plugin also allows you to embed tweets and threads. Simply type `/Embed tweet/thread` and enter the url of the **first** tweet of the thread. It will automaticaly scan to see if it's a single tweet or thread and embed it accordingly/and embed it accordingly.
+
+# Customisation
+
+## Setting custom hashtags for successful tweets
 
 Successful tweets will look something like this: `#tweeted on Feb 22nd, 2022 at 15:34`. You can replace `#tweeted on` with your own custom hashtag by changing the plugin settings.
 
@@ -79,6 +87,7 @@ Successful tweets will look something like this: `#tweeted on Feb 22nd, 2022 at 
 - API Secret
 - Access Token
 - Access Token Secret
+- Bearer Token
 
 7. The information in (6) will need to go in the plugin settings as above.
 
