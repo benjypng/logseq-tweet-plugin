@@ -7,7 +7,7 @@ export const buttonRenderer = (twitterClient: any) => {
     const uuid = payload.uuid;
     const [type] = payload.arguments;
     const id = type.split("_")[1]?.trim();
-    const tweetId = `tweet_${id}`;
+    const tweetId = `tweet_${id}_${slot}`;
 
     if (!type.startsWith(":tweet_")) return;
 
