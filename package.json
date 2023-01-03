@@ -22,6 +22,7 @@
     "axios": "^1.2.2",
     "axios-jsonp": "^1.0.4",
     "axios-oauth-1.0a": "^0.3.5",
+    "cssnano": "^5.1.14",
     "logseq-dateutils": "^0.0.26",
     "postcss-cli": "^10.1.0",
     "postcss-import": "^15.1.0",
