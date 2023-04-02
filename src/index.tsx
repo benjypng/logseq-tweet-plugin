@@ -32,7 +32,7 @@ const main = async () => {
   }, 3000);
 
   // Define twitter client
-  const { appKey, appSecret, accessToken, accessSecret } = logseq.settings;
+  const { appKey, appSecret, accessToken, accessSecret } = logseq.settings!;
   const twitterClient = axios.create();
   const options = {
     algorithm: "HMAC-SHA1" as "HMAC-SHA1",
@@ -53,11 +53,11 @@ const main = async () => {
         	border: 1px solid;
         	background-color: rgb(29, 155, 240);
         }
-        
+
         .tweet-btn:hover {
         	background-color: rgb(9, 90, 144);
         }
-        
+
         .tweet-txt {
             margin: 0 0 12px 0 !important;
             padding: 0;
@@ -65,7 +65,7 @@ const main = async () => {
             line-height: 0 !important;
     	    color: white !important;
         }
-        
+
         .count {
             margin: 0;
             padding: 0;

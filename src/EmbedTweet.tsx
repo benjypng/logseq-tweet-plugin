@@ -42,7 +42,7 @@ const EmbedTweetOrThread = (props: any) => {
           url: `https://api.twitter.com/2/tweets/search/recent`,
           method: "get",
           headers: {
-            Authorization: `Bearer ${logseq.settings.bearerToken}`,
+            Authorization: `Bearer ${logseq.settings?.bearerToken}`,
           },
           params: {
             query: `conversation_id:${tweetId} from:${tweetResponse.data.data.author_id} to:${tweetResponse.data.data.author_id}`,
@@ -56,15 +56,15 @@ const EmbedTweetOrThread = (props: any) => {
         }](https://twitter.com/${tweetResponse.data.includes.users[0].username})
         date:: ${getDateForPage(
           new Date(tweetResponse.data.data.created_at),
-          logseq.settings.preferredDateFormat
+          logseq.settings?.preferredDateFormat
         )}
         > ${tweetResponse.data.data.text}`);
 
-        const currBlock: BlockEntity = await logseq.Editor.getCurrentBlock();
+        const currBlock = await logseq.Editor.getCurrentBlock();
 
         if (threadResponse.data.meta.result_count === 0) {
-          const blockAfter: BlockEntity = await logseq.Editor.insertBlock(
-            currBlock.uuid,
+          const blockAfter = await logseq.Editor.insertBlock(
+            currBlock!.uuid,
             "",
             {
               before: false,
@@ -73,7 +73,7 @@ const EmbedTweetOrThread = (props: any) => {
           );
 
           window.setTimeout(async () => {
-            await logseq.Editor.editBlock(blockAfter.uuid);
+            await logseq.Editor.editBlock(blockAfter!.uuid);
           }, 600);
         } else {
           const threadBlock: IBatchBlock = threadResponse.data.data
@@ -82,7 +82,7 @@ const EmbedTweetOrThread = (props: any) => {
               content: i.text,
             }));
 
-          await logseq.Editor.insertBatchBlock(currBlock.uuid, threadBlock, {
+          await logseq.Editor.insertBatchBlock(currBlock!.uuid, threadBlock, {
             before: false,
             sibling: false,
           });

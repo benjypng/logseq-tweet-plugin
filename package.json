@@ -5,7 +5,7 @@
     "icon": "./icon.svg"
   },
   "name": "logseq-tweet-plugin",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "",
   "main": "dist/index.html",
   "targets": {
@@ -19,27 +19,27 @@
   "license": "MIT",
   "dependencies": {
     "@logseq/libs": "^0.0.14",
-    "axios": "^1.2.2",
+    "axios": "^1.3.4",
     "axios-jsonp": "^1.0.4",
-    "axios-oauth-1.0a": "^0.3.5",
-    "cssnano": "^5.1.14",
+    "axios-oauth-1.0a": "^0.3.6",
+    "cssnano": "^6.0.0",
     "logseq-dateutils": "^0.0.26",
+    "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
-    "postcss-import": "^15.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^3.2.4",
+    "tailwindcss": "^3.3.1",
     "twitter-text": "^3.1.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.18",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.10",
-    "@types/twitter-text": "^3.1.1",
-    "buffer": "^6.0.3",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.31",
+    "@types/react-dom": "^18.0.11",
+    "@types/twitter-text": "^3.1.5",
+    "buffer": "^5.5.0",
     "crypto-browserify": "^3.12.0",
     "events": "^3.3.0",
-    "parcel": "^2.5.0",
+    "parcel": "^2.8.3",
     "stream-browserify": "^3.0.0"
   }
 }
